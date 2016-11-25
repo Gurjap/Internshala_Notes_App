@@ -1,0 +1,9 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.gurjap.internshala_notes_app.Simple_Notes_activity" >
+    <item android:id="@+id/signout"
+        android:title="@string/action_signout"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+</menu>

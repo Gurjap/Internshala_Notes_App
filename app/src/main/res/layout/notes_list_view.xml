@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:text="Heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:id="@+id/heading_note"
+        android:textStyle="normal|bold"
+        android:textSize="18sp" />
+
+    <TextView
+        android:text="LAST MODIFIED:"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView6"
+        android:layout_below="@+id/heading_note"
+        android:layout_alignLeft="@+id/heading_note"
+        android:layout_alignStart="@+id/heading_note" />
+
+    <TextView
+        android:text="12:00PM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/modified_date"
+        android:layout_alignBaseline="@+id/textView6"
+        android:layout_alignBottom="@+id/textView6"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="61dp"
+        android:layout_marginEnd="61dp" />
+
+    <TextView
+        android:text="Notes hello hello helnsjdcdujcusibcdsicisdcbisbcibcsicdsbcjdscids"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/note_listview"
+        android:layout_marginTop="11dp"
+        android:layout_margin="10dp"
+        android:layout_below="@+id/textView6"
+        android:layout_alignLeft="@+id/textView6"
+        android:layout_alignStart="@+id/textView6" />
+
+    <Button
+        android:id="@+id/delete_btn"
+        android:background="@android:drawable/ic_menu_close_clear_cancel"
+        android:focusable="false"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginBottom="8dp"
+        android:layout_above="@+id/note_listview"
+        android:layout_alignRight="@+id/note_listview"
+        android:layout_alignEnd="@+id/note_listview"
+        android:layout_alignLeft="@+id/heading_note"
+        android:layout_alignParentRight="true"
+        android:layout_margin="5dp" />
+
+    <Button
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:id="@+id/edit_btn"
+        android:background="@android:drawable/ic_menu_edit"
+        android:layout_below="@+id/modified_date"
+        android:layout_alignRight="@+id/note_listview"
+        android:layout_alignEnd="@+id/note_listview"
+        android:layout_alignParentRight="true"
+        android:layout_margin="5dp" />
+
+</RelativeLayout>
