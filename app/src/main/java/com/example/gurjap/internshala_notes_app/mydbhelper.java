@@ -9,12 +9,21 @@ public class mydbhelper extends SQLiteOpenHelper
 {
 
 
- static String DATABASE_NAME="Internshala_notes_2";
-    static int DB_VERSION=1;
-    Context mycontext;
+    final private static String DATABASE_NAME="Internshala_not";
+    final private static String INTERNSHALA_NOTE="internshala_notes";
+    final private static String INTERNSHALA_USER="Internshala_users";
+    final private static String NOTE_ID="note_id";
+    final private static String NOTE_HEADING="heading";
+    final private static String NOTES_NOTE="notes";
+    final private static String NOTES_MODIFIED="Modified_date";
+ 
+    final private static String NOTES_USERNAME="username";
+    final private static String NOTES_PASSWORD="password";
+    final private static int DB_VERSION=1;
+    private Context mycontext;
     SQLiteDatabase mydb;
 
-   public mydbhelper(Context context)
+   mydbhelper(Context context)
    {
        super(context,DATABASE_NAME,null,DB_VERSION);
        mycontext=context;
@@ -23,15 +32,9 @@ public class mydbhelper extends SQLiteOpenHelper
     @Override
     public void onCreate(SQLiteDatabase db)
     {
-        String q="create table if not exists internshala_notes("
-                +"notes text," +
-                "Modified_date INTEGER," +
-                "user_name text," +
-                "note_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "heading text)";
-        String q1="create table if not exists internshala_users("
-                +"username text primary key," +
-                "passward text)";
+        String q="create table if not exists "+INTERNSHALA_NOTE+"("+NOTES_NOTE+" text,"+NOTES_MODIFIED+" INTEGER,"+NOTES_USERNAME+" text,"+NOTE_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+NOTE_HEADING+" text)";
+        String q1="create table if not exists "+INTERNSHALA_USER+"("
+                +NOTES_USERNAME+" text primary key," +NOTES_PASSWORD+" text)";
         db.execSQL(q);
         db.execSQL(q1);
     }
@@ -45,41 +48,38 @@ public class mydbhelper extends SQLiteOpenHelper
     {
         mydb=this.getReadableDatabase();
     }
-    public void close1(){
-        mydb.close();
 
-    }
-    public long onInsert_Notes(String note,String Heading,long note_id)
+    long onInsert_Notes(String note, String Heading, long note_id)
     {
         ContentValues myvalues=new ContentValues();
         myvalues.clear();
         Login_session_shared_pref a=new Login_session_shared_pref(this.mycontext);
-        if(note_id>=0)myvalues.put("note_id",note_id);
-        if(note!=null) myvalues.put("notes",note);
-        if(Heading!=null)  myvalues.put("heading",Heading);
-        myvalues.put("Modified_date",String.valueOf(System.currentTimeMillis()));
-        myvalues.put("user_name",a.getusername());
-        long internshala_notes_in= mydb.insertWithOnConflict("internshala_notes",null,myvalues, SQLiteDatabase.CONFLICT_IGNORE);
+        if(note_id>=0)myvalues.put(NOTE_ID,note_id);
+        if(note!=null) myvalues.put(NOTES_NOTE,note);
+        if(Heading!=null)  myvalues.put(NOTE_HEADING,Heading);
+        myvalues.put(NOTES_MODIFIED,String.valueOf(System.currentTimeMillis()));
+        myvalues.put(NOTES_USERNAME,a.getusername());
+        long internshala_notes_in= mydb.insertWithOnConflict(INTERNSHALA_NOTE,null,myvalues, SQLiteDatabase.CONFLICT_IGNORE);
         if(internshala_notes_in<0) {
-            return mydb.update("internshala_notes", myvalues, "note_id =?", new String[]{String.valueOf(note_id)});
+            return mydb.update(INTERNSHALA_NOTE, myvalues, NOTE_ID+" =?", new String[]{String.valueOf(note_id)});
         }
         return internshala_notes_in;
     }
 
-    public long onnewRegister(String username,String password)
+    long onnewRegister(String username, String password)
     {
         ContentValues myvalues=new ContentValues();
         myvalues.clear();
 
-        myvalues.put("username",username);
-        myvalues.put("passward",password);
+        myvalues.put(NOTES_USERNAME,username);
+        myvalues.put(NOTES_PASSWORD,password);
 
-        long internshala_notes_user= mydb.insertWithOnConflict("internshala_users",null,myvalues, SQLiteDatabase.CONFLICT_IGNORE);
-        return internshala_notes_user;
+        return mydb.insertWithOnConflict(INTERNSHALA_USER,null,myvalues, SQLiteDatabase.CONFLICT_IGNORE);
+
     }
 
 
-    public long Delete_note(String note_id){
-    return mydb.delete("internshala_notes","note_id=?",new String[]{note_id});
+    long Delete_note(String note_id){
+    return mydb.delete(INTERNSHALA_NOTE,NOTE_ID+"=?",new String[]{note_id});
     }
 }

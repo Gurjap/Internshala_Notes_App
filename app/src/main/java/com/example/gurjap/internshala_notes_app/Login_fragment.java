@@ -51,14 +51,14 @@ final Login_session_shared_pref a=new Login_session_shared_pref(getActivity());
                         }
                         else if(blank_check_pass.equals(""))
                         {
-                            Toast.makeText(getActivity(), "Please enter passward", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Please enter password", Toast.LENGTH_SHORT).show();
                             return;
                         }
 
                         mydbhelper obj1=new mydbhelper(getActivity());
                         obj1.open();
                         Cursor myresult;
-                        myresult = obj1.mydb.rawQuery("select username from internshala_users where passward=? LIMIT 1",new String[]{password.getText().toString()});
+                        myresult = obj1.mydb.rawQuery("select username from internshala_users where password=? LIMIT 1",new String[]{password.getText().toString()});
 
 
                         if(myresult.moveToNext())
@@ -71,10 +71,10 @@ final Login_session_shared_pref a=new Login_session_shared_pref(getActivity());
                         }
                         else {
 
-                            Toast.makeText(getActivity(), "Wrong Username or passward", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "Wrong Username or password", Toast.LENGTH_SHORT).show();
                         }
                         myresult.close();
-                        obj1.close1();
+                        obj1.close();
 
 
                     }

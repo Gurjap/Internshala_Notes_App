@@ -1,5 +1,6 @@
 package com.example.gurjap.internshala_notes_app;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,14 +9,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.media.session.MediaSessionCompat;
-import android.support.v7.app.AppCompatActivity;
+
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -23,7 +20,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
+
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,15 +32,15 @@ import java.util.Date;
  */
 
 public class Notes_list_fragment extends Fragment{
-    Fragment myfrag;
+
     ArrayAdapter notes_list_ArrayAdapter;
     ArrayList<String> notes,modified_date,heading,note_id;
-    FragmentTransaction fragmentTransaction;
+
     String username;
     ListView mynoteslist;
     TextView headingTextView;
     TextView noteTextView;
-int list_position;
+   int list_position;
 
     public Notes_list_fragment() {
     }
@@ -63,10 +60,10 @@ int list_position;
                              Bundle savedInstanceState) {
         View myNotelistview=inflater.inflate(R.layout.notes_list,container,false);
          mynoteslist= (ListView) myNotelistview.findViewById(R.id.notes_listview);
-        notes=new ArrayList<String>();
-        note_id=new ArrayList<String>();
-        modified_date=new ArrayList<String>();
-        heading=new ArrayList<String>();
+        notes=new ArrayList<>();
+        note_id=new ArrayList<>();
+        modified_date=new ArrayList<>();
+        heading=new ArrayList<>();
 
 
 
@@ -87,12 +84,11 @@ int list_position;
     }
 
     String date_to_time(String startTime) throws ParseException {
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = dateFormatter.parse(startTime);
-        SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a dd-MM-yyyy");
-        String displayValue = timeFormatter.format(date);
-        return displayValue;
-    }
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a dd-MM-yyyy");
+        return timeFormatter.format(date);
+        }
     public static String convertDate(String dateInMilliseconds, String dateFormat) {
         return DateFormat.format(dateFormat, Long.parseLong(dateInMilliseconds)).toString();
     }
@@ -100,7 +96,7 @@ int list_position;
         AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
 
         LayoutInflater layoutInflater=getActivity().getLayoutInflater();
-        View mydialogview=layoutInflater.inflate(R.layout.add_notes,null);
+        @SuppressLint("InflateParams") View mydialogview=layoutInflater.inflate(R.layout.add_notes,null);
         builder1.setView(mydialogview);
         builder1.setCancelable(true);
           headingTextView= (TextView) mydialogview.findViewById(R.id.add_heading);
@@ -111,13 +107,13 @@ if(note_id>0){
 }
 
         builder1.setPositiveButton(
-                "Save",
+                getResources().getString(R.string.save),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         String heading_check=headingTextView.getText().toString();
                         heading_check=heading_check.replace(" ","");
                         if(heading_check.equals("")){
-                            Toast.makeText(getActivity(), "Please enter heading..", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(),getResources().getString(R.string.enter_heading), Toast.LENGTH_SHORT).show();
                             return;
                         }
                         mydbhelper mydb=new mydbhelper(getActivity());
@@ -128,13 +124,13 @@ if(note_id>0){
                         fetchnotes(username);
                         notes_list_ArrayAdapter.notifyDataSetChanged();
                         mynoteslist.setAdapter(notes_list_ArrayAdapter);
-                        Toast.makeText(getActivity(), "Saved", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getResources().getString(R.string.saved), Toast.LENGTH_SHORT).show();
 
                     }
                 });
 
         builder1.setNegativeButton(
-                "Cancel",
+                getResources().getString(R.string.cancel),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
@@ -153,7 +149,7 @@ if(note_id>0){
         mydbhelper obj1=new mydbhelper(getActivity());
         obj1.open();
         Cursor myresult;
-        myresult = obj1.mydb.rawQuery("select notes,heading,Modified_date,note_id from internshala_notes where user_name=? order by Modified_date desc",new String[]{username});
+        myresult = obj1.mydb.rawQuery(getResources().getString(R.string.sql_query_fetch_note),new String[]{username});
 
 
         while(myresult.moveToNext())
@@ -164,24 +160,19 @@ if(note_id>0){
             note_id.add(myresult.getString(myresult.getColumnIndex("note_id")));
         }
         myresult.close();
-        obj1.close1();
+        obj1.close();
 }
 
-
-
-
-
-
-    class mynotelistview extends ArrayAdapter<String>
+ class mynotelistview extends ArrayAdapter<String>
     {
-        public mynotelistview(Context context, int resource,ArrayList<String> objects) {
+        mynotelistview(Context context, int resource, ArrayList<String> objects) {
             super(context, resource, objects);
         }
         @NonNull
         @Override
-        public View getView(int position, View convertView, final ViewGroup parent) {
+        public View getView(int position, View convertView, @NonNull final ViewGroup parent) {
             LayoutInflater myinflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View myviewlist = myinflater.inflate(R.layout.notes_list_view, parent, false);
+            @SuppressLint("ViewHolder") View myviewlist = myinflater.inflate(R.layout.notes_list_view, parent, false);
 
             TextView noteTextView= (TextView) myviewlist.findViewById(R.id.note_listview);
             TextView headingTextView= (TextView) myviewlist.findViewById(R.id.heading_note);
@@ -213,11 +204,11 @@ editbtn.setOnClickListener(new View.OnClickListener() {
                     list_position = listView.getPositionForView(parentview);
 
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
-                    builder1.setMessage("Do you really want to delete this note?");
+                    builder1.setMessage(getResources().getString(R.string.delete_dialog));
                     builder1.setCancelable(true);
 
                     builder1.setPositiveButton(
-                            "Yes",
+                            getResources().getString(R.string.delete_yes),
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     mydbhelper mydbhelpernew=new mydbhelper(getActivity());
@@ -231,7 +222,7 @@ editbtn.setOnClickListener(new View.OnClickListener() {
                             });
 
                     builder1.setNegativeButton(
-                            "No",
+                            getResources().getString(R.string.delete_no),
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.cancel();
@@ -249,28 +240,4 @@ editbtn.setOnClickListener(new View.OnClickListener() {
         }
     }
 
-/*
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId() == R.id.signout) {
-            Login_session_shared_pref a = new Login_session_shared_pref(getActivity());
-            a.putusername("");
-            a.setsession(false);
-
- destroymenu();
-
-       }
-
-        return super.onOptionsItemSelected(item);
-
-    }*/
-
-    @Override
-    public void onDestroyOptionsMenu() {
-
-        super.onDestroyOptionsMenu();
-
-
-    }
 }

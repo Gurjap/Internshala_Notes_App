@@ -5,9 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuInflater;
+
 import android.view.MenuItem;
-import android.widget.Toast;
+
 
 
 public class Simple_Notes_activity extends AppCompatActivity {
@@ -48,10 +48,7 @@ if(savedInstanceState==null){
             Login_session_shared_pref a=new Login_session_shared_pref(this);
             a.putusername("");
             a.setsession(false);
-
-           // Toast.makeText(this, "dd", Toast.LENGTH_SHORT).show();
             mymenu.removeItem(R.id.signout);
-
             getSupportFragmentManager().beginTransaction().add(R.id.contentfragment1,new Login_fragment()).commit();
 
         }
