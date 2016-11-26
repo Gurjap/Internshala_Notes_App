@@ -154,6 +154,7 @@ if(note_id>0){
 
         while(myresult.moveToNext())
         {
+
             notes.add(myresult.getString(myresult.getColumnIndex("notes")));
             modified_date.add(myresult.getString(myresult.getColumnIndex("Modified_date")));
             heading.add(myresult.getString(myresult.getColumnIndex("heading")));
