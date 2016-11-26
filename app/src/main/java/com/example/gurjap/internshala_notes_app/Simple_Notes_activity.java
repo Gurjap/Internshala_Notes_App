@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -25,10 +27,21 @@ if(savedInstanceState==null){
         }
 
     }
+        Menu mymenu;
+        @Override
+        public boolean onCreateOptionsMenu(Menu menu) {
+
+            mymenu=menu;
 
 
+            getMenuInflater().inflate(R.menu.menu_simple__notes, mymenu);
 
-    @Override
+
+            return super.onCreateOptionsMenu(menu);
+        }
+
+
+        @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if(item.getItemId()==R.id.signout){
@@ -37,8 +50,9 @@ if(savedInstanceState==null){
             a.setsession(false);
 
            // Toast.makeText(this, "dd", Toast.LENGTH_SHORT).show();
+            mymenu.removeItem(R.id.signout);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.contentfragment1,new Login_fragment()).commit();
+            getSupportFragmentManager().beginTransaction().add(R.id.contentfragment1,new Login_fragment()).commit();
 
         }
 

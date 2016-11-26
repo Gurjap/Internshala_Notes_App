@@ -17,7 +17,8 @@ public class Login_session_shared_pref {
     mySharedPreferences=mainContext.getSharedPreferences("Intershala_note",Context.MODE_PRIVATE);
     myEditor=mySharedPreferences.edit();
 }
-    public void setsession(boolean b){
+    public void setsession(boolean b)
+    {
         myEditor.putBoolean("session",b);
         myEditor.commit();
     }

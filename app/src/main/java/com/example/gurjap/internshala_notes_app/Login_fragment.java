@@ -1,12 +1,12 @@
 package com.example.gurjap.internshala_notes_app;
 
 import android.database.Cursor;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -30,7 +30,7 @@ Fragment myfrag;
      final EditText username=(EditText)myloginview.findViewById(R.id.username);
      final EditText password=(EditText)myloginview.findViewById(R.id.password);
 final Login_session_shared_pref a=new Login_session_shared_pref(getActivity());
-     onDestroyOptionsMenu();
+     setHasOptionsMenu(false);
      if(a.checksession()){
 
          myfrag=new Notes_list_fragment();
@@ -115,7 +115,7 @@ final Login_session_shared_pref a=new Login_session_shared_pref(getActivity());
         }
         else if(blank_check_pass.equals(""))
         {
-            Toast.makeText(getActivity(), "Please enter passward", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Please enter password", Toast.LENGTH_SHORT).show();
             return;
         }
         else{
@@ -148,10 +148,10 @@ final Login_session_shared_pref a=new Login_session_shared_pref(getActivity());
        return myloginview;
     }
 
+
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
-
-        super.onCreateOptionsMenu(menu, inflater);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(false);
     }
 }

@@ -47,6 +47,7 @@ int list_position;
 
     public Notes_list_fragment() {
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,19 +56,7 @@ int list_position;
 
 
 
-    Menu mymenu;
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-mymenu=menu;
-        inflater.inflate(R.menu.menu_simple__notes, mymenu);
-        super.onCreateOptionsMenu(mymenu, inflater);
 
-
-    }
-void destroymenu(){
-    Login_session_shared_pref a=new Login_session_shared_pref(getActivity());
-    if(!a.checksession()&&mymenu!=null)mymenu.close();
-}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
