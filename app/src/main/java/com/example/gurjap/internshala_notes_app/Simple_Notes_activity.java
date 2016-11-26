@@ -27,14 +27,17 @@ if(savedInstanceState==null){
         }
 
     }
-        Menu mymenu;
+        Menu mymenu=null;
         @Override
         public boolean onCreateOptionsMenu(Menu menu) {
 
-            mymenu=menu;
 
 
-            getMenuInflater().inflate(R.menu.menu_simple__notes, mymenu);
+Login_session_shared_pref a=new Login_session_shared_pref(this);
+            if(a.checksession()) {
+                mymenu=menu;
+                getMenuInflater().inflate(R.menu.menu_simple__notes, mymenu);
+            }
 
 
             return super.onCreateOptionsMenu(menu);
@@ -48,6 +51,7 @@ if(savedInstanceState==null){
             Login_session_shared_pref a=new Login_session_shared_pref(this);
             a.putusername("");
             a.setsession(false);
+            if(mymenu!=null)
             mymenu.removeItem(R.id.signout);
             getSupportFragmentManager().beginTransaction().add(R.id.contentfragment1,new Login_fragment()).commit();
 
