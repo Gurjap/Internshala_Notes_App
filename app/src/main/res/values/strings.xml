@@ -5,4 +5,7 @@
     <string name="delete_dialog">Do you really want to delete this Note?</string>
     <string name="delete_yes">Yes</string>
     <string name="delete_no">NO</string>
+    <string name="user_hint_reg">Enter New Username</string>
+    <string name="pass_hint_reg">Enter New Password</string>
+
 </resources>

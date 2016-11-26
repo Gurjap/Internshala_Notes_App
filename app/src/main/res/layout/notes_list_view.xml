@@ -15,17 +15,19 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:id="@+id/heading_note"
-        android:textStyle="normal|bold"
-        android:textSize="18sp" />
+        android:textStyle="normal|bold|italic"
+        android:textSize="18sp"
+        android:textColor="?android:attr/colorMultiSelectHighlight" />
 
     <TextView
-        android:text="LAST MODIFIED:"
+        android:text="Modified"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView6"
         android:layout_below="@+id/heading_note"
         android:layout_alignLeft="@+id/heading_note"
-        android:layout_alignStart="@+id/heading_note" />
+        android:layout_alignStart="@+id/heading_note"
+        android:textColor="@color/colorAccent" />
 
     <TextView
         android:text="12:00PM"
@@ -37,18 +39,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="61dp"
-        android:layout_marginEnd="61dp" />
-
-    <TextView
-        android:text="Notes hello hello helnsjdcdujcusibcdsicisdcbisbcibcsicdsbcjdscids"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/note_listview"
-        android:layout_marginTop="11dp"
-        android:layout_margin="10dp"
-        android:layout_below="@+id/textView6"
-        android:layout_alignLeft="@+id/textView6"
-        android:layout_alignStart="@+id/textView6" />
+        android:layout_marginEnd="61dp"
+        android:textColor="@color/colorAccent" />
 
     <Button
         android:id="@+id/delete_btn"
@@ -69,10 +61,27 @@
         android:layout_height="20dp"
         android:id="@+id/edit_btn"
         android:background="@android:drawable/ic_menu_edit"
-        android:layout_below="@+id/modified_date"
-        android:layout_alignRight="@+id/note_listview"
-        android:layout_alignEnd="@+id/note_listview"
+        android:layout_below="@+id/delete_btn"
         android:layout_alignParentRight="true"
-        android:layout_margin="5dp" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentBottom="false" />
+
+    <TextView
+        android:text="Notes hello hello helnsjdcdujcusibcdsicisdcbisbcibcsicdsbcjdscids"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/note_listview"
+        android:layout_marginTop="6dp"
+        android:textSize="18sp"
+        android:textColor="?attr/colorPrimary"
+        android:layout_below="@+id/textView6"
+        android:layout_alignLeft="@+id/textView6"
+        android:layout_alignStart="@+id/textView6"
+        android:layout_toLeftOf="@+id/edit_btn"
+        android:layout_toStartOf="@+id/edit_btn" />
 
 </RelativeLayout>

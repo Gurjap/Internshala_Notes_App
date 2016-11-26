@@ -1,21 +1,16 @@
 package com.example.gurjap.internshala_notes_app;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.media.session.MediaSessionCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,7 +20,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,13 +52,22 @@ int list_position;
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
     }
+
+
+
+    Menu mymenu;
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+mymenu=menu;
+        inflater.inflate(R.menu.menu_simple__notes, mymenu);
+        super.onCreateOptionsMenu(mymenu, inflater);
 
-    inflater.inflate(R.menu.menu_simple__notes,menu);
-        super.onCreateOptionsMenu(menu, inflater);
+
     }
-
+void destroymenu(){
+    Login_session_shared_pref a=new Login_session_shared_pref(getActivity());
+    if(!a.checksession()&&mymenu!=null)mymenu.close();
+}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,9 +78,10 @@ int list_position;
         note_id=new ArrayList<String>();
         modified_date=new ArrayList<String>();
         heading=new ArrayList<String>();
-        Toolbar toolbar= (Toolbar) myNotelistview.findViewById(R.id.toolbar3);
 
-        Login_session login_session=new Login_session();
+
+
+        Login_session_shared_pref login_session=new Login_session_shared_pref(getActivity());
         username=login_session.getusername();
         fetchnotes(login_session.getusername());
         notes_list_ArrayAdapter=new mynotelistview(getActivity(),R.layout.notes_list_view,notes);
@@ -116,6 +120,7 @@ if(note_id>0){
     headingTextView.setText(heading.get(list_position));
     noteTextView.setText(notes.get(list_position));
 }
+
         builder1.setPositiveButton(
                 "Save",
                 new DialogInterface.OnClickListener() {
@@ -171,10 +176,12 @@ if(note_id>0){
         }
         myresult.close();
         obj1.close1();
+}
 
 
 
-    }
+
+
 
     class mynotelistview extends ArrayAdapter<String>
     {
@@ -251,5 +258,30 @@ editbtn.setOnClickListener(new View.OnClickListener() {
 
             return myviewlist;
         }
+    }
+
+/*
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.signout) {
+            Login_session_shared_pref a = new Login_session_shared_pref(getActivity());
+            a.putusername("");
+            a.setsession(false);
+
+ destroymenu();
+
+       }
+
+        return super.onOptionsItemSelected(item);
+
+    }*/
+
+    @Override
+    public void onDestroyOptionsMenu() {
+
+        super.onDestroyOptionsMenu();
+
+
     }
 }
